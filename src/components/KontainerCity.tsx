@@ -150,11 +150,12 @@ const CTAButton: React.FC<{
     href: string;
     children: React.ReactNode;
     icon?: React.ReactNode;
-    variant?: 'primary' | 'secondary';
+    variant?: 'primary' | 'secondary' | 'pick';
 }> = ({ href, children, icon, variant = 'primary' }) => {
     const variants = {
         primary: "bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white shadow-lg hover:shadow-red-200",
-        secondary: "bg-gradient-to-r from-slate-600 to-slate-700 hover:from-slate-700 hover:to-slate-800 text-white shadow-lg hover:shadow-slate-200"
+        secondary: "bg-[#0088cc] text-white hover:bg-[#006699] shadow-lg hover:shadow-slate-200",
+        pick: "bg-gradient-to-r from-[#F58529] via-[#DD2A7B] to-[#8134AF] text-white hover:opacity-90"
     };
 
     return (
@@ -206,10 +207,10 @@ const COMPANY_ADVANTAGES = [
     'Sifat va mustahkamlik – ishlatiladigan materiallar yuqori darajali va bardoshli.',
     'Tezkorlik – qisqa vaqt ichida qurilish va o\'rnatish ishlari yakunlanadi.',
     'Hamyonbop narxlar – byudjetingizga mos keladigan yechimlar taklif qilamiz.',
-    'Professional jamoa: Bizning jamoamiz malakali va tajribali mutaxassislardan iborat.',
+    'Professional jamoa: Bizning jamoamiz malakali va tajribali mutaxasislardan iborat.',
     'Kafolat – har bir qurilgan konstruksiya kafolat bilan topshiriladi.',
     'Mijozlarga yo\'naltirilgan yondashuv: Biz mijozlarimizning ehtiyojlarini tushunishga va ularga mos yechimlar taklif qilishga intilamiz.',
-    'Bizda oddiy ustalar emas, balki o\'z ishining haqiqiy mutaxassislari xizmat ko\'rsatadi.',
+    'Bizda oddiy ustalar emas, balki o\'z ishining haqiqiy mutaxasislari xizmat ko\'rsatadi.',
     'Ishlab chiqarishning barcha bosqichlari nazorat ostida amalga oshiriladi.',
 ];
 
@@ -337,7 +338,7 @@ function KonteynerCity() {
                     
                     <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
                         {[
-                            { icon: '📞', title: 'Birinchi bosqichda', desc: 'Bizning xush muomala menejirlarimiz sizdan buyurtmani qabul qilishadi.' },
+                            { icon: '📞', title: 'Birinchi bosqichda', desc: 'Bizning xush muomala menejerlarimiz sizdan buyurtmani qabul qilishadi.' },
                             { icon: '📝', title: 'Ikkinchi bosqichda', desc: 'Sizning buyurtmangiz yo\'nalishi bo\'yicha o\'z ishining mutahasislari tomonidan yasaladi.' },
                             { icon: '⚙️', title: 'Uchinchi bosqichda', desc: 'Qurib bitkazilgan mahsulot sifat nazoratidan o\'tkaziladi. Ushbu jarayon bizning fabrikamiz uchun muhim jarayon hisoblanadi!' },
                             { icon: '🚚', title: 'To\'rtinchi bosqichda', desc: 'Sifat nazoratidan o\'tgan mahsulotingiz siz aytgan joyga yetkazib beriladi.' }
@@ -362,18 +363,18 @@ function KonteynerCity() {
                 {/* Social Media Links */}
                 <motion.section className="py-16">
                     <InfoCard variant="gradient" className="max-w-4xl mx-auto text-center">
-                        <SectionHeader gradient>Bizni ijtimoiy tarmoqlarda kuzatib boring</SectionHeader>
+                        <SectionHeader gradient className='mb-5'>Bizni ijtimoiy tarmoqlarda kuzatib boring</SectionHeader>
                         <div className="flex flex-wrap justify-center gap-4">
                             <CTAButton href="https://www.youtube.com/@KontainerCityUz" variant="primary">
-                                <Youtube className="w-5 h-5" />
-                                YouTube
+                                <Youtube className="w-5 h-5 text-white" />
+                                <span className='text-white'>YouTube</span>
                             </CTAButton>
-                            <CTAButton href="https://www.instagram.com/kontainer_city.uz?igsh=eTN2amw1cDM1MGNv&utm_source=qr" variant="secondary">
-                                <Instagram className="w-5 h-5" />
-                                Instagram
+                            <CTAButton href="https://www.instagram.com/kontainer_city.uz?igsh=eTN2amw1cDM1MGNv&utm_source=qr" variant="pick">
+                                <Instagram className="w-5 h-5 text-white" />
+                                <span className='text-white'>Instagram</span>
                             </CTAButton>
-                            <CTAButton href="https://t.me/kontainer_city" variant="primary">
-                                Telegram
+                            <CTAButton href="https://t.me/kontainer_city" variant="secondary">
+                                <span className='text-white'>Telegram</span>
                             </CTAButton>
                         </div>
                     </InfoCard>
@@ -412,11 +413,11 @@ function KonteynerCity() {
                         <div className="space-y-6">
                             {[
                                 {
-                                    q: "Nega aynan kontainer city?",
-                                    a: "Metal konstruksiyadan qo'rilgan ko'chma do'kon narx jihatidan bozordagi boshqalardan sezilarli darajada arzonroq."
+                                    q: "Nega aynan Kontainer City?",
+                                    a: "Bizdagi kontainerdan qurilgan loyihalar narx jihatidan bozordagi boshqalardan sezilarli darajada arzonroq."
                                 },
                                 {
-                                    q: "Bizdan harid qilishingizni nima qulayliklar bor?",
+                                    q: "Bizdan xarid qilishingizni nima qulayliklar bor?",
                                     a: "Boshlang'ich va o'rta bizneslar uchun qimmat ijara yoki qimmat qurilish xarajatlari muammo. Biz esa ular uchun biznesni boshlash yoki kengaytirishning arzon va qulay yechimini taklif qilamiz."
                                 },
                                 {
@@ -597,9 +598,8 @@ function KonteynerCity() {
                             {[
                                 "Bizning ishlab chiqarish quvvatimiz har kuni 20 kv, oyiga 610 kv va yiliga 7300 kv tashkil etadi.",
                                 "Viloyatlar miqyosida 100 dan ko'proq mutaxasislarimiz faoliyat yuritadi.",
-                                "Bizning mahsulotimizga talab Respublikamizda 2020-yillarda 12,000 dan ortiq bo'lgan va bu ko'rsatgich yildan yilga 15-20% oshib bormoqda.",
-                                "2025 yilga kelib 17,000 ga yaqin talab bo'ladi va bu ko'rsatgich statistikadan hisoblangan. Bizning fabrikamizning bu yilgi rejasi 800-1000 donani tashkil qiladi.",
-                                "Ishlab chiqarish quvvatimiz kuniga ikkita do'konni tayyor holga keltirishga imkon beradi."
+                                "Ishlab chiqarish quvvatimiz kuniga ikkita do'konni tayyor holga keltirishga imkon beradi.",
+                                                                "Bizning fabrikamiz O‘zbekiston bo‘yicha birinchi ochilgan va birinchi raqamli fabrika hisoblanadi. Eng asosiysi 8 yildan beri faoliyatda!"
                             ].map((text, index) => (
                                 <motion.p
                                     key={index}
@@ -710,10 +710,10 @@ function KonteynerCity() {
                                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
                                     <CTAButton href="tel:+998787777557" variant="primary">
                                         <Phone className="w-5 h-5" />
-                                        Hozir Buyurtma Bering
+                                        <span className='text-white'>Hozir Buyurtma Bering</span>
                                     </CTAButton>
                                     <CTAButton href="https://t.me/kontainer_city" variant="secondary">
-                                        Bepul Maslahat Oling
+                                        <span className='text-white'>Bepul Maslahat Oling</span>
                                     </CTAButton>
                                 </div>
                             </motion.div>
