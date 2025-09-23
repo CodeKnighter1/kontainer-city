@@ -54,9 +54,8 @@ const ScrollToTop = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: isVisible ? 1 : 0 }}
             transition={{ duration: 0.3 }}
-            className={`fixed bottom-6 right-6 z-50 p-3 bg-gradient-to-r from-red-500 to-red-600 text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300 ${
-                isVisible ? 'pointer-events-auto' : 'pointer-events-none'
-            }`}
+            className={`fixed bottom-6 right-6 z-50 p-3 bg-gradient-to-r from-red-500 to-red-600 text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300 ${isVisible ? 'pointer-events-auto' : 'pointer-events-none'
+                }`}
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
         >
@@ -104,11 +103,11 @@ const SectionHeader: React.FC<SectionHeaderProps> = ({
     className = "",
     gradient = false
 }) => (
-    <motion.h2 
+    <motion.h2
         className={`text-2xl md:text-3xl lg:text-4xl font-bold text-center mb-8 ${gradient
             ? 'bg-gradient-to-r from-red-600 via-slate-700 to-red-600 bg-clip-text text-transparent'
             : 'text-slate-800'
-        } ${className}`}
+            } ${className}`}
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, ease: "easeOut" }}
@@ -133,7 +132,7 @@ const InfoCard: React.FC<InfoCardProps> = ({
     };
 
     return (
-        <motion.div 
+        <motion.div
             className={`${baseClasses} ${variantClasses[variant]} ${className}`}
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -260,7 +259,7 @@ function KonteynerCity() {
         <div className='w-full min-h-screen relative'>
             <AnimatedBackground />
             <ScrollToTop />
-            
+
             <div className="container mx-auto relative z-10 px-4">
                 {/* Hero Section */}
                 <motion.div
@@ -270,7 +269,7 @@ function KonteynerCity() {
                     transition={variants.fadeInUp.transition}
                 >
                     {/* Logo placeholder - bu yerga logo qo'shiladi */}
-                    <motion.div 
+                    <motion.div
                         className="mb-8"
                         initial={{ opacity: 0, scale: 0.8 }}
                         animate={{ opacity: 1, scale: 1 }}
@@ -321,11 +320,14 @@ function KonteynerCity() {
                         transition={{ delay: 1, duration: 0.6 }}
                     >
                         <CTAButton href="tel:+998787777557" variant="primary">
-                            <Phone className="w-5 h-5" />
-                            Hozir Qo'ng'iroq
+                            <div className='flex gap-1 items-center'>
+                                <Phone className="w-5 h-5" />
+                                <span className='text-white'>Hozir Qo'ng'iroq</span>
+                            </div>
+
                         </CTAButton>
                         <CTAButton href="https://t.me/kontainer_city" variant="secondary">
-                            Batafsil Ma'lumot
+                            <span className='text-white'>Batafsil Ma'lumot</span>
                         </CTAButton>
                     </motion.div>
                 </motion.div>
@@ -335,7 +337,7 @@ function KonteynerCity() {
                     <SectionHeader>
                         Buyurtmangiz sizgacha ushbu jarayonlardan o'tadi
                     </SectionHeader>
-                    
+
                     <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
                         {[
                             { icon: '📞', title: 'Birinchi bosqichda', desc: 'Bizning xush muomala menejerlarimiz sizdan buyurtmani qabul qilishadi.' },
@@ -366,15 +368,21 @@ function KonteynerCity() {
                         <SectionHeader gradient className='mb-5'>Bizni ijtimoiy tarmoqlarda kuzatib boring</SectionHeader>
                         <div className="flex flex-wrap justify-center gap-4">
                             <CTAButton href="https://www.youtube.com/@KontainerCityUz" variant="primary">
-                                <Youtube className="w-5 h-5 text-white" />
-                                <span className='text-white'>YouTube</span>
+                                <div className='flex gap-1 items-center'>
+                                    <Youtube className="w-5 h-5 text-white" />
+                                    <span className='text-white'>YouTube</span>
+                                </div>
                             </CTAButton>
                             <CTAButton href="https://www.instagram.com/kontainer_city.uz?igsh=eTN2amw1cDM1MGNv&utm_source=qr" variant="pick">
-                                <Instagram className="w-5 h-5 text-white" />
-                                <span className='text-white'>Instagram</span>
+                                <div className='flex gap-1 items-center'>
+                                    <Instagram className="w-5 h-5 text-white" />
+                                    <span className='text-white'>Instagram</span>
+                                </div>
                             </CTAButton>
                             <CTAButton href="https://t.me/kontainer_city" variant="secondary">
-                                <span className='text-white'>Telegram</span>
+                                <div className='flex gap-1 items-center'>
+                                    <span className='text-white'>Telegram</span>
+                                </div>
                             </CTAButton>
                         </div>
                     </InfoCard>
@@ -505,7 +513,7 @@ function KonteynerCity() {
                             <h2 className="text-4xl font-bold mb-8 bg-gradient-to-r from-red-600 to-slate-700 bg-clip-text text-transparent text-center lg:text-left">
                                 KONTAINER CITY HAQIDA
                             </h2>
-                            
+
                             <div className="space-y-6 text-slate-600 leading-relaxed">
                                 {[
                                     "Metal konstruksiyadan qurilgan do'konlar bugungi kunda eng samarali va zamonaviy yechim hisoblanadi. Bunday inshootlar nafaqat mustahkam va ishonchli, balki iqtisodiy jihatdan ham foydali.",
@@ -535,7 +543,7 @@ function KonteynerCity() {
                                 <h3 className="text-2xl font-bold text-slate-800 mb-6 text-center">
                                     Kontainer City <span className='text-3xl italic text-red-600'>Xizmatlarimiz</span>
                                 </h3>
-                                
+
                                 <div className="space-y-4">
                                     {SERVICES.map((service, index) => (
                                         <motion.div
@@ -588,7 +596,7 @@ function KonteynerCity() {
                             })}
                         </div>
 
-                        <motion.div 
+                        <motion.div
                             className="space-y-6 text-slate-600 leading-relaxed"
                             initial={{ opacity: 0 }}
                             whileInView={{ opacity: 1 }}
@@ -599,7 +607,7 @@ function KonteynerCity() {
                                 "Bizning ishlab chiqarish quvvatimiz har kuni 20 kv, oyiga 610 kv va yiliga 7300 kv tashkil etadi.",
                                 "Viloyatlar miqyosida 100 dan ko'proq mutaxasislarimiz faoliyat yuritadi.",
                                 "Ishlab chiqarish quvvatimiz kuniga ikkita do'konni tayyor holga keltirishga imkon beradi.",
-                                                                "Bizning fabrikamiz O‘zbekiston bo‘yicha birinchi ochilgan va birinchi raqamli fabrika hisoblanadi. Eng asosiysi 8 yildan beri faoliyatda!"
+                                "Bizning fabrikamiz O‘zbekiston bo‘yicha birinchi ochilgan va birinchi raqamli fabrika hisoblanadi. Eng asosiysi 8 yildan beri faoliyatda!"
                             ].map((text, index) => (
                                 <motion.p
                                     key={index}
@@ -625,15 +633,15 @@ function KonteynerCity() {
                         </SectionHeader>
 
                         <div className="max-w-4xl mx-auto">
-                            <motion.p 
+                            <motion.p
                                 className="text-slate-700 text-lg leading-relaxed text-center mb-12"
                                 initial={{ opacity: 0 }}
                                 whileInView={{ opacity: 1 }}
                                 transition={{ duration: 0.6 }}
                                 viewport={{ once: true }}
                             >
-                                Biznes — birinchi qadamdan boshlanadi. Bizning metal konstruksiyadan qurilgan 
-                                ko'chma do'konlarimiz bilan sizning birinchi qadamingiz mustahkam, ishonchli va 
+                                Biznes — birinchi qadamdan boshlanadi. Bizning metal konstruksiyadan qurilgan
+                                ko'chma do'konlarimiz bilan sizning birinchi qadamingiz mustahkam, ishonchli va
                                 hamyonbop bo'lishini ta'minlaymiz.
                             </motion.p>
 
@@ -648,7 +656,7 @@ function KonteynerCity() {
                                         <h3 className="text-2xl font-bold text-slate-800 mb-6 text-center">
                                             Murojat uchun
                                         </h3>
-                                        
+
                                         <div className="space-y-4">
                                             <motion.a
                                                 href="tel:+998787777557"
@@ -678,7 +686,7 @@ function KonteynerCity() {
                                         <h3 className="text-2xl font-bold text-slate-800 mb-6 text-center">
                                             Bizning manzil
                                         </h3>
-                                        
+
                                         <div className="flex items-start gap-4 p-4 bg-white/70 rounded-xl">
                                             <div className="p-3 bg-gradient-to-r from-slate-600 to-slate-700 rounded-lg flex-shrink-0">
                                                 <MapPin className="w-5 h-5 text-white" />
@@ -697,7 +705,7 @@ function KonteynerCity() {
                             </div>
 
                             {/* Final CTA */}
-                            <motion.div 
+                            <motion.div
                                 className="text-center mt-12"
                                 initial={{ opacity: 0, y: 30 }}
                                 whileInView={{ opacity: 1, y: 0 }}
@@ -709,8 +717,10 @@ function KonteynerCity() {
                                 </h3>
                                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
                                     <CTAButton href="tel:+998787777557" variant="primary">
+                                        <div className='flex gap-1 items-center'>
                                         <Phone className="w-5 h-5" />
                                         <span className='text-white'>Hozir Buyurtma Bering</span>
+                                        </div>
                                     </CTAButton>
                                     <CTAButton href="https://t.me/kontainer_city" variant="secondary">
                                         <span className='text-white'>Bepul Maslahat Oling</span>
@@ -722,7 +732,7 @@ function KonteynerCity() {
                 </motion.section>
 
                 {/* Footer */}
-                <motion.footer 
+                <motion.footer
                     className="py-12 text-center"
                     initial={{ opacity: 0 }}
                     whileInView={{ opacity: 1 }}
