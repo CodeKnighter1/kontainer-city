@@ -1,8 +1,8 @@
 import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion';
 import { useMemo, useState, useEffect } from 'react';
-import { Award, CheckCircle, Clock, CpuIcon, HeartIcon, MapPin, Phone, TrendingUp, UserCheck, Users2, ChevronUp, Play, Instagram, Youtube } from 'lucide-react';
+import { Award, CheckCircle, MapPin, Phone, TrendingUp, Users2, ChevronUp, Instagram, Youtube, Container, Building, Layers, Zap } from 'lucide-react';
 import logo from '@/images/logo.png'
-
+import telegram_l from '@/images/icons8-telegram-48.png'
 
 interface AnimationVariants {
     fadeInLeft: any;
@@ -15,13 +15,13 @@ interface AnimationVariants {
 interface SectionHeaderProps {
     children: React.ReactNode;
     className?: string;
-    gradient?: boolean;
+    variant?: 'primary' | 'secondary' | 'accent';
 }
 
 interface InfoCardProps {
     children: React.ReactNode;
     className?: string;
-    variant?: 'default' | 'gradient' | 'accent' | 'glass';
+    variant?: 'default' | 'gradient' | 'accent' | 'glass' | 'dark';
 }
 
 // ScrollToTop Button Component
@@ -54,9 +54,9 @@ const ScrollToTop = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: isVisible ? 1 : 0 }}
             transition={{ duration: 0.3 }}
-            className={`fixed bottom-6 right-6 z-50 p-3 bg-gradient-to-r from-red-500 to-red-600 text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300 ${isVisible ? 'pointer-events-auto' : 'pointer-events-none'
+            className={`fixed bottom-6 right-6 z-50 p-4 bg-gradient-to-r from-teal-600 to-cyan-600 text-white rounded-3xl shadow-2xl hover:shadow-cyan-300/25 transition-all duration-300 ${isVisible ? 'pointer-events-auto' : 'pointer-events-none'
                 }`}
-            whileHover={{ scale: 1.1 }}
+            whileHover={{ scale: 1.1, y: -3 }}
             whileTap={{ scale: 0.9 }}
         >
             <ChevronUp className="w-6 h-6" />
@@ -68,31 +68,35 @@ const ScrollToTop = () => {
 const AnimatedBackground = () => {
     return (
         <div className="fixed inset-0 -z-10 overflow-hidden">
-            <div className="absolute inset-0 bg-gradient-to-br from-slate-50 via-white to-blue-50"></div>
+            <div className="absolute inset-0 bg-gradient-to-br from-gray-900 via-slate-800 to-teal-900"></div>
             <motion.div
-                className="absolute top-0 left-0 w-96 h-96 bg-gradient-to-r from-red-100/30 to-blue-100/30 rounded-full blur-3xl"
+                className="absolute -top-40 -right-40 w-96 h-96 bg-gradient-to-r from-teal-400/10 to-cyan-400/5 rounded-full blur-3xl"
                 animate={{
-                    x: [0, 100, 0],
-                    y: [0, 50, 0],
+                    rotate: [0, 360],
+                    scale: [1, 1.4, 1],
                 }}
                 transition={{
-                    duration: 20,
+                    duration: 40,
                     repeat: Infinity,
                     ease: "linear"
                 }}
             />
             <motion.div
-                className="absolute bottom-0 right-0 w-96 h-96 bg-gradient-to-r from-blue-100/20 to-red-100/20 rounded-full blur-3xl"
+                className="absolute -bottom-40 -left-40 w-96 h-96 bg-gradient-to-r from-cyan-400/8 to-teal-400/5 rounded-full blur-3xl"
                 animate={{
-                    x: [0, -100, 0],
-                    y: [0, -50, 0],
+                    rotate: [360, 0],
+                    scale: [1.2, 1, 1.2],
                 }}
                 transition={{
-                    duration: 25,
+                    duration: 35,
                     repeat: Infinity,
                     ease: "linear"
                 }}
             />
+            {/* Grid Pattern */}
+            <div className="absolute inset-0 opacity-5">
+                <div className="h-full w-full bg-[linear-gradient(90deg,rgba(34,197,94,0.1)_1px,transparent_1px),linear-gradient(rgba(34,197,94,0.1)_1px,transparent_1px)] bg-[size:50px_50px]"></div>
+            </div>
         </div>
     );
 };
@@ -101,42 +105,48 @@ const AnimatedBackground = () => {
 const SectionHeader: React.FC<SectionHeaderProps> = ({
     children,
     className = "",
-    gradient = false
-}) => (
-    <motion.h2
-        className={`text-2xl md:text-3xl lg:text-4xl font-bold text-center mb-8 ${gradient
-            ? 'bg-gradient-to-r from-red-600 via-slate-700 to-red-600 bg-clip-text text-transparent'
-            : 'text-slate-800'
-            } ${className}`}
-        initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, ease: "easeOut" }}
-        viewport={{ once: true }}
-    >
-        {children}
-    </motion.h2>
-);
+    variant = 'primary'
+}) => {
+    const variants = {
+        primary: 'text-white font-light tracking-wide',
+        secondary: 'bg-gradient-to-r from-teal-400 via-cyan-400 to-emerald-400 bg-clip-text text-transparent font-light tracking-wider',
+        accent: 'text-teal-400 font-medium tracking-wide'
+    };
+
+    return (
+        <motion.h2
+            className={`text-3xl md:text-4xl lg:text-5xl text-center mb-16 ${variants[variant]} ${className}`}
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, ease: "easeOut" }}
+            viewport={{ once: true }}
+        >
+            {children}
+        </motion.h2>
+    );
+};
 
 const InfoCard: React.FC<InfoCardProps> = ({
     children,
     className = "",
     variant = 'default'
 }) => {
-    const baseClasses = "p-6 md:p-8 mb-8 transition-all duration-500 hover:scale-[1.02]";
+    const baseClasses = "transition-all duration-700 hover:scale-[1.01] rounded-2xl";
 
     const variantClasses = {
-        default: "bg-white/80 backdrop-blur-sm shadow-lg hover:shadow-2xl rounded-2xl border border-white/20",
-        gradient: "bg-gradient-to-br from-white/90 via-red-50/30 to-blue-50/30 backdrop-blur-md shadow-xl hover:shadow-2xl rounded-3xl border border-white/30",
-        accent: "bg-gradient-to-br from-red-50/80 to-blue-50/80 backdrop-blur-sm shadow-lg hover:shadow-xl rounded-2xl border border-red-100/30",
-        glass: "bg-white/10 backdrop-blur-md shadow-xl border border-white/20 rounded-3xl hover:bg-white/20"
+        default: "bg-slate-800/90 backdrop-blur-sm shadow-2xl hover:shadow-teal-500/10 border border-slate-700/50 p-8",
+        gradient: "bg-gradient-to-br from-slate-800/95 via-gray-800/90 to-slate-900/95 backdrop-blur-md shadow-2xl hover:shadow-cyan-500/15 border border-slate-600/30 p-10",
+        accent: "bg-gradient-to-br from-teal-900/80 to-slate-800/90 backdrop-blur-sm shadow-2xl hover:shadow-teal-400/20 border border-teal-700/30 p-8",
+        glass: "bg-slate-800/30 backdrop-blur-xl shadow-2xl border border-slate-600/20 hover:bg-slate-800/40 p-8",
+        dark: "bg-gradient-to-br from-gray-900 to-slate-900 text-white shadow-2xl hover:shadow-emerald-900/20 p-10 border border-gray-700/50"
     };
 
     return (
         <motion.div
             className={`${baseClasses} ${variantClasses[variant]} ${className}`}
-            initial={{ opacity: 0, y: 40 }}
+            initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, ease: "easeOut" }}
+            transition={{ duration: 0.9, ease: "easeOut" }}
             viewport={{ once: true }}
         >
             {children}
@@ -149,12 +159,16 @@ const CTAButton: React.FC<{
     href: string;
     children: React.ReactNode;
     icon?: React.ReactNode;
-    variant?: 'primary' | 'secondary' | 'pick';
+    variant?: 'primary' | 'secondary' | 'outline' | 'social' | 'telegram' | 'youtube' | 'pick';
 }> = ({ href, children, icon, variant = 'primary' }) => {
     const variants = {
-        primary: "bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white shadow-lg hover:shadow-red-200",
-        secondary: "bg-[#0088cc] text-white hover:bg-[#006699] shadow-lg hover:shadow-slate-200",
-        pick: "bg-gradient-to-r from-[#F58529] via-[#DD2A7B] to-[#8134AF] text-white hover:opacity-90"
+        primary: "bg-gradient-to-r from-teal-500 to-cyan-500 text-white shadow-xl hover:shadow-teal-300/30 hover:from-teal-600 hover:to-cyan-600",
+        secondary: "bg-gradient-to-r from-slate-700 to-gray-700 text-white shadow-xl hover:shadow-slate-300/30 hover:from-slate-800 hover:to-gray-800",
+        outline: "border-2 border-teal-400 text-teal-400 hover:bg-teal-400 hover:text-slate-900 bg-slate-800/50 backdrop-blur-sm",
+        social: "bg-gradient-to-r from-cyan-500 via-teal-500 to-emerald-500 text-white shadow-xl hover:shadow-cyan-300/40",
+        pick: "bg-gradient-to-r from-[#F58529] via-[#DD2A7B] to-[#8134AF] text-white hover:opacity-90",
+        telegram: "bg-gradient-to-r from-blue-500 to-blue-400 text-white shadow-lg hover:shadow-red-200",
+        youtube: "bg-gradient-to-r from-red-500 to-red-600 text-white shadow-lg hover:shadow-pink-200"
     };
 
     return (
@@ -162,11 +176,11 @@ const CTAButton: React.FC<{
             href={href}
             target="_blank"
             rel="noopener noreferrer"
-            className={`inline-flex items-center space-x-3 px-6 py-3 rounded-xl font-medium transition-all duration-300 ${variants[variant]}`}
+            className={`inline-flex items-center space-x-3 px-8 py-4 rounded-2xl font-medium text-lg transition-all duration-300 ${variants[variant]}`}
             whileHover={{ scale: 1.05, y: -2 }}
             whileTap={{ scale: 0.95 }}
         >
-            {icon && <span className="w-5 h-5">{icon}</span>}
+            {icon && <span className="w-6 h-6">{icon}</span>}
             <span>{children}</span>
         </motion.a>
     );
@@ -174,24 +188,24 @@ const CTAButton: React.FC<{
 
 const createAnimationVariants = (prefersReducedMotion: boolean): AnimationVariants => ({
     fadeInLeft: {
-        initial: { opacity: 0, x: prefersReducedMotion ? 0 : -60 },
+        initial: { opacity: 0, x: prefersReducedMotion ? 0 : -80 },
         animate: { opacity: 1, x: 0 },
-        transition: { duration: prefersReducedMotion ? 0.1 : 0.8, ease: 'easeOut' }
+        transition: { duration: prefersReducedMotion ? 0.1 : 1.2, ease: 'easeOut' }
     },
     fadeInRight: {
-        initial: { opacity: 0, x: prefersReducedMotion ? 0 : 60 },
+        initial: { opacity: 0, x: prefersReducedMotion ? 0 : 80 },
         animate: { opacity: 1, x: 0 },
-        transition: { duration: prefersReducedMotion ? 0.1 : 0.8, ease: 'easeOut' }
+        transition: { duration: prefersReducedMotion ? 0.1 : 1.2, ease: 'easeOut' }
     },
     fadeInUp: {
-        initial: { opacity: 0, y: prefersReducedMotion ? 0 : 30 },
+        initial: { opacity: 0, y: prefersReducedMotion ? 0 : 40 },
         animate: { opacity: 1, y: 0 },
-        transition: { duration: prefersReducedMotion ? 0.1 : 0.6, ease: 'easeOut' }
+        transition: { duration: prefersReducedMotion ? 0.1 : 1, ease: 'easeOut' }
     },
     scaleIn: {
-        initial: { opacity: 0, scale: prefersReducedMotion ? 1 : 0.9 },
+        initial: { opacity: 0, scale: prefersReducedMotion ? 1 : 0.8 },
         animate: { opacity: 1, scale: 1 },
-        transition: { duration: prefersReducedMotion ? 0.1 : 0.5, ease: 'easeOut' }
+        transition: { duration: prefersReducedMotion ? 0.1 : 0.9, ease: 'easeOut' }
     },
     stagger: {
         animate: {
@@ -203,185 +217,220 @@ const createAnimationVariants = (prefersReducedMotion: boolean): AnimationVarian
 });
 
 const COMPANY_ADVANTAGES = [
-    'Sifat va mustahkamlik – ishlatiladigan materiallar yuqori darajali va bardoshli.',
-    'Tezkorlik – qisqa vaqt ichida qurilish va o\'rnatish ishlari yakunlanadi.',
-    'Hamyonbop narxlar – byudjetingizga mos keladigan yechimlar taklif qilamiz.',
-    'Professional jamoa: Bizning jamoamiz malakali va tajribali mutaxasislardan iborat.',
-    'Kafolat – har bir qurilgan konstruksiya kafolat bilan topshiriladi.',
-    'Mijozlarga yo\'naltirilgan yondashuv: Biz mijozlarimizning ehtiyojlarini tushunishga va ularga mos yechimlar taklif qilishga intilamiz.',
-    'Bizda oddiy ustalar emas, balki o\'z ishining haqiqiy mutaxasislari xizmat ko\'rsatadi.',
-    'Ishlab chiqarishning barcha bosqichlari nazorat ostida amalga oshiriladi.',
+    'Ilg\'or texnologiya - zamonaviy kontainer dizayni va ishlab chiqarish usullari',
+    'Maksimal samaradorlik - qisqa muddatda yuqori sifatli natijalar',
+    'Moslashuvchan narxlar - har qanday loyiha byudjeti uchun optimal yechimlar',
+    'Ekspert jamoa - kontainer sanoatidagi yetakchi mutaxasislar',
+    'Uzaytirilgan kafolat - barcha mahsulotlar uchun keng qamrovli himoya',
+    'Mijoz markazli xizmat - har bir talabga individual yondashuv',
+    'Yuqori malakali ishchi kuchi - tajribali va sertifikatlangan mutaxasislar',
+    'To\'liq sifat nazorati - ishlab chiqarishning har bir bosqichida tekshirish'
 ];
 
 const KEY_FEATURES = [
     {
-        icon: Clock,
-        title: 'Qurilish tezligi',
-        description: 'An\'anaviy g\'isht yoki beton binolarga qaraganda, metall konstruksiya qismlari oldindan tayyorlanadi va joyida tez yig\'iladi. Bu vaqt va mehnatni tejaydi.',
-        color: 'from-red-500 to-red-600'
+        icon: Container,
+        title: 'Modulli Tizim',
+        description: 'Zamonaviy modulli kontainer tizimi orqali istalgan o\'lcham va konfiguratsiyada qurilish. Kelajakda oson kengaytirish va o\'zgartirish imkoniyati.',
+        color: 'from-teal-500 to-cyan-500'
     },
     {
-        icon: UserCheck,
-        title: 'Mustahkamlik va chidamlilik',
-        description: 'Metall konstruksiyalar zilzilaga, shamolga va boshqa tashqi ta\'sirlarga bardoshli. Yillar davomida shaklini yo\'qotmaydi.',
-        color: 'from-slate-600 to-slate-700'
+        icon: Building,
+        title: 'Struktural Mustahkamlik',
+        description: 'Yuqori sifatli po\'lat va kompozit materiallardan yasalgan kontainerlar har qanday ob-havo sharoitlariga bardosh beradi. 50+ yil xizmat muddati.',
+        color: 'from-slate-600 to-gray-600'
     },
     {
-        icon: CpuIcon,
-        title: 'Arzonroq xarajat',
-        description: 'Qurilish materiali va vaqt kam sarflangani uchun umumiy narx ham nisbatan past bo\'ladi. Uzoq muddatda ta\'mirlash xarajatlari ham kamroq bo\'ladi.',
-        color: 'from-blue-500 to-blue-600'
+        icon: Layers,
+        title: 'Ko\'p Qatlamli Yechim',
+        description: 'Vertikal va gorizontal kengaytirish imkoniyati bilan modulli qurilish. Maydon tejash va maksimal samaradorlik ta\'minlash.',
+        color: 'from-cyan-400 to-teal-500'
     },
     {
-        icon: HeartIcon,
-        title: 'Ko\'chirish va kengaytirish imkoniyati',
-        description: 'Metall konstruksiya modulli bo\'lgani uchun keyinchalik do\'konni kattalashtirish yoki boshqa joyga ko\'chirish osonroq.',
-        color: 'from-red-400 to-pink-500'
+        icon: Zap,
+        title: 'Tez Qurilish',
+        description: 'Tayyor modullar yordamida an\'anaviy qurilishdan 90% tezroq natija. Professional o\'rnatish va ishga tushirish xizmati.',
+        color: 'from-emerald-500 to-teal-600'
     }
 ] as const;
 
 const SERVICES = [
-    'Do\'kon va savdo nuqtalari – qisqa vaqt ichida qurib, foydalanishga tayyor qilib beramiz.',
-    'Omborxonalar – katta maydonli, keng va xavfsiz konstruksiyalar.',
-    'Angarlar – qishloq xo\'jaligi, ishlab chiqarish yoki texnika saqlash uchun qulay variant.',
-    'Avtoturargohlar – transport vositalaringiz uchun mustahkam va ishonchli joy.',
-    'Pavilyon va ustaxonalar – kichik biznes va servis xizmatlari uchun ideal yechim.',
-    'Individual buyurtmalar – siz o\'ylagan maxsus metal konstruksiyani loyihalab, sifatli qilib yasab beramiz.'
+    'Tijorat kontainerlari - savdo va biznes markazlari uchun zamonaviy yechimlar',
+    'Turar joy komplekslari - modulli va energiya tejovchi uy-joy loyihalari',
+    'Sanoat majmualari - zavod va ishlab chiqarish korxonalari uchun kontainerlar',
+    'Ta\'lim muassasalari - maktab va universitet kampuslari uchun modulli binolar',
+    'Tibbiyot markazlari - klinika va shifoxonalar uchun maxsus kontainerlar',
+    'Maxsus loyihalar - noyob talablar asosida individual kontainer yechimlari'
 ];
 
 function KonteynerCity() {
     const prefersReducedMotion = !!useReducedMotion();
     const variants = useMemo(() => createAnimationVariants(prefersReducedMotion), [prefersReducedMotion]);
     const { scrollYProgress } = useScroll();
-    const y = useTransform(scrollYProgress, [0, 1], ['0%', '50%']);
+    const y = useTransform(scrollYProgress, [0, 1], ['0%', '20%']);
 
     return (
-        <div className='w-full min-h-screen relative'>
+        <div className='w-full min-h-screen relative text-white' style={{
+            '--teal-700': '#0f766e',
+            '--teal-800': '#115e59',
+            '--cyan-600': '#0891b2'
+        } as React.CSSProperties}>
             <AnimatedBackground />
             <ScrollToTop />
 
-            <div className="container mx-auto relative z-10 px-4">
+            <div className="container mx-auto relative z-10 px-3">
                 {/* Hero Section */}
                 <motion.div
-                    className="text-center py-16 mt-3"
+                    className="text-center py-24 mt-8"
                     initial={variants.fadeInUp.initial}
                     animate={variants.fadeInUp.animate}
                     transition={variants.fadeInUp.transition}
                 >
-                    {/* Logo placeholder - bu yerga logo qo'shiladi */}
                     <motion.div
-                        className="mb-8"
-                        initial={{ opacity: 0, scale: 0.8 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        transition={{ duration: 0.8, ease: "easeOut" }}
+                        className="mb-16"
+                        initial={{ opacity: 0, scale: 0.6, y: 50 }}
+                        animate={{ opacity: 1, scale: 1, y: 0 }}
+                        transition={{ duration: 1.5, ease: "easeOut" }}
                     >
-                        <div className='flex items-center justify-center'>
-                            <img src={logo} alt="" />
+                        <div className='flex items-center justify-center mb-8'>
+                            <div className="relative">
+                                <img src={logo} alt="Kontainer City Logo" className='w-52 h-52 rounded-2xl shadow-2xl border-2 border-teal-400/30' />
+                            </div>
                         </div>
-                        {/* <div className="w-32 h-32 mx-auto bg-gradient-to-br from-red-500 to-slate-700 rounded-2xl flex items-center justify-center shadow-2xl">
-                            <span className="text-white font-bold text-lg">LOGO</span>
-                        </div> */}
                     </motion.div>
 
-                    <motion.h1
-                        className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6"
-                        initial={{ opacity: 0, y: 30 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.3, duration: 0.8 }}
-                    >
-                        <span className="bg-gradient-to-r from-red-600 via-slate-800 to-red-600 bg-clip-text text-transparent">
-                            "KONTAINER" CITY
-                        </span>
-                    </motion.h1>
-
-                    <motion.p
-                        className="text-xl md:text-2xl text-slate-700 mt-8 font-medium"
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        transition={{ delay: 0.6, duration: 0.6 }}
-                    >
-                        Mijoz uchun sifat, biz uchun mas'uliyat!
-                    </motion.p>
-
-                    <motion.p
-                        className="text-base md:text-lg text-slate-600 mt-4"
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        transition={{ delay: 0.8, duration: 0.6 }}
-                    >
-                        O'zbekistondagi eng ilg'or kontainerlar fabrikasi.
-                    </motion.p>
-
-                    {/* CTA Buttons */}
                     <motion.div
-                        className="flex flex-col sm:flex-row gap-4 justify-center mt-12"
-                        initial={{ opacity: 0, y: 30 }}
+                        initial={{ opacity: 0, y: 60 }}
                         animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 1, duration: 0.6 }}
+                        transition={{ delay: 0.5, duration: 1.2 }}
+                    >
+                        <h1 className="text-6xl md:text-8xl lg:text-9xl font-light mb-12 tracking-wider">
+                            <span className="bg-gradient-to-r from-teal-400 via-cyan-400 to-emerald-400 bg-clip-text text-transparent">
+                                KONTAINER
+                            </span>
+                            <br />
+                            <span className="text-teal-400 font-thin text-5xl md:text-7xl lg:text-8xl">
+                                CITY
+                            </span>
+                        </h1>
+
+                        <div className="flex justify-center items-center space-x-4 mb-12">
+                            <div className="w-24 h-0.5 bg-gradient-to-r from-transparent to-teal-400"></div>
+                            <Container className="w-12 h-12 text-teal-400" />
+                            <div className="w-24 h-0.5 bg-gradient-to-l from-transparent to-teal-400"></div>
+                        </div>
+                    </motion.div>
+
+                    <motion.p
+                        className="text-2xl md:text-3xl text-teal-300 font-light mb-8 tracking-wide"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ delay: 1, duration: 1 }}
+                    >
+                        Zamonaviy kontainer arkitekturasining birinchi raqamli kompaniyasi
+                    </motion.p>
+
+                    <motion.p
+                        className="text-lg md:text-xl text-gray-600 mb-20 max-w-4xl mx-auto font-light leading-relaxed"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ delay: 1.2, duration: 1 }}
+                    >
+                        O'zbekistonda modulli kontainer qurilishi sohasidagi mutloq lider.
+                        Innovatsion yechimlar, professional jamoa va 8 yillik tajriba.
+                    </motion.p>
+
+                    <motion.div
+                        className="flex flex-col sm:flex-row gap-8 justify-center"
+                        initial={{ opacity: 0, y: 40 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 1.4, duration: 1 }}
                     >
                         <CTAButton href="tel:+998787777557" variant="primary">
-                            <div className='flex gap-1 items-center'>
-                                <Phone className="w-5 h-5" />
-                                <span className='text-white'>Hozir Qo'ng'iroq</span>
+                            <div className='flex items-center gap-1'>
+                                <Phone className="w-6 h-6" />
+                                Loyiha boshlash
                             </div>
-
                         </CTAButton>
-                        <CTAButton href="https://t.me/kontainer_city" variant="secondary">
-                            <span className='text-white'>Batafsil Ma'lumot</span>
+                        <CTAButton href="https://t.me/kontainer_city" variant="outline">
+                            Ko'proq bilish
                         </CTAButton>
                     </motion.div>
                 </motion.div>
 
                 {/* Process Steps */}
-                <motion.section className="py-16">
-                    <SectionHeader>
-                        Buyurtmangiz sizgacha ushbu jarayonlardan o'tadi
+                <motion.section className="py-24">
+                    <SectionHeader variant="secondary">
+                        Professional loyiha jarayoni
                     </SectionHeader>
 
-                    <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-10">
                         {[
-                            { icon: '📞', title: 'Birinchi bosqichda', desc: 'Bizning xush muomala menejerlarimiz sizdan buyurtmani qabul qilishadi.' },
-                            { icon: '📝', title: 'Ikkinchi bosqichda', desc: 'Sizning buyurtmangiz yo\'nalishi bo\'yicha o\'z ishining mutahasislari tomonidan yasaladi.' },
-                            { icon: '⚙️', title: 'Uchinchi bosqichda', desc: 'Qurib bitkazilgan mahsulot sifat nazoratidan o\'tkaziladi. Ushbu jarayon bizning fabrikamiz uchun muhim jarayon hisoblanadi!' },
-                            { icon: '🚚', title: 'To\'rtinchi bosqichda', desc: 'Sifat nazoratidan o\'tgan mahsulotingiz siz aytgan joyga yetkazib beriladi.' }
+                            {
+                                title: 'Strategik Maslahat',
+                                desc: 'Professional arxitektor va muhandislar sizning g\'oyangizni batafsil tahlil qilib, eng optimal yechimni ishlab chiqadi.',
+                                step: '01'
+                            },
+                            {
+                                title: '3D Loyihalash',
+                                desc: 'Zamonaviy dasturlar yordamida sizning kontainer loyihangizning to\'liq 3D vizualizatsiyasini yaratamiz.',
+                                step: '02'
+                            },
+                            {
+                                title: 'Yuqori Sifatli Ishlab Chiqarish',
+                                desc: 'Evropa standartlariga javob beruvchi modern uskunalar yordamida pretsizion ishlab chiqarish.',
+                                step: '03'
+                            },
+                            {
+                                title: 'Professional Yetkazish',
+                                desc: 'Maxsus transport va malakali o\'rnatish jamoasi orqali loyihangizni kalit taslim topshirish.',
+                                step: '04'
+                            }
                         ].map((step, index) => (
                             <motion.div
                                 key={index}
-                                initial={{ opacity: 0, y: 50 }}
+                                initial={{ opacity: 0, y: 100 }}
                                 whileInView={{ opacity: 1, y: 0 }}
-                                transition={{ delay: index * 0.1, duration: 0.6 }}
+                                transition={{ delay: index * 0.2, duration: 1 }}
                                 viewport={{ once: true }}
                             >
-                                <InfoCard variant="glass" className="h-full text-center">
-                                    <div className="text-5xl mb-4">{step.icon}</div>
-                                    <h3 className="text-xl font-bold mb-3 text-slate-800">{step.title}</h3>
-                                    <p className='text-slate-600 leading-relaxed'>{step.desc}</p>
+                                <InfoCard variant="glass" className="h-full text-center relative overflow-hidden">
+                                    <div className="absolute -top-4 -right-4 w-20 h-20 bg-gradient-to-r from-teal-400 to-cyan-400 rounded-full flex items-center justify-center opacity-20">
+                                        <span className="text-white font-light text-2xl">{step.step}</span>
+                                    </div>
+                                    {/* <div className="text-8xl mb-8 filter drop-shadow-lg">{step.icon}</div> */}
+                                    <h3 className="text-2xl font-light mb-6 text-teal-500 tracking-wide">{step.title}</h3>
+                                    <p className='text-white leading-relaxed text-base font-light'>{step.desc}</p>
                                 </InfoCard>
                             </motion.div>
                         ))}
                     </div>
                 </motion.section>
 
-                {/* Social Media Links */}
-                <motion.section className="py-16">
-                    <InfoCard variant="gradient" className="max-w-4xl mx-auto text-center">
-                        <SectionHeader gradient className='mb-5'>Bizni ijtimoiy tarmoqlarda kuzatib boring</SectionHeader>
-                        <div className="flex flex-wrap justify-center gap-4">
-                            <CTAButton href="https://www.youtube.com/@KontainerCityUz" variant="primary">
-                                <div className='flex gap-1 items-center'>
-                                    <Youtube className="w-5 h-5 text-white" />
-                                    <span className='text-white'>YouTube</span>
+                {/* Social Media Section */}
+                <motion.section className="py-24">
+                    <InfoCard variant="dark">
+                        <SectionHeader className="text-white mb-12">
+                            Bizning ijtimoiy sahifalatimiz
+                        </SectionHeader>
+                        <div className="flex flex-wrap justify-center gap-8">
+                            <CTAButton href="https://www.youtube.com/@KontainerCityUz" variant="youtube">
+                                <div className='flex items-center gap-1 text-white'>
+                                    <Youtube className="w-6 h-6" />
+                                    YouTube
                                 </div>
                             </CTAButton>
                             <CTAButton href="https://www.instagram.com/kontainer_city.uz?igsh=eTN2amw1cDM1MGNv&utm_source=qr" variant="pick">
-                                <div className='flex gap-1 items-center'>
-                                    <Instagram className="w-5 h-5 text-white" />
-                                    <span className='text-white'>Instagram</span>
+                                <div className='flex items-center gap-1 text-white'>
+                                    <Instagram className="w-6 h-6" />
+                                    Instagram
                                 </div>
+
                             </CTAButton>
-                            <CTAButton href="https://t.me/kontainer_city" variant="secondary">
-                                <div className='flex gap-1 items-center'>
-                                    <span className='text-white'>Telegram</span>
+                            <CTAButton href="https://t.me/kontainer_city" variant="telegram">
+                                <div className='flex items-center gap-1 text-white'>
+                                    <img src={telegram_l} alt="telegram logo" className='w-7 h-7' />
+                                    Telegram
                                 </div>
                             </CTAButton>
                         </div>
@@ -389,70 +438,28 @@ function KonteynerCity() {
                 </motion.section>
 
                 {/* Company Advantages */}
-                <motion.section className="py-16">
+                <motion.section className="py-24">
                     <InfoCard variant="default">
-                        <SectionHeader className="flex items-center justify-center gap-3">
-                            <Award className="w-12 h-12 text-red-500" />
-                            NEGA <span className="text-red-600">"KONTAINER CITY"</span>
+                        <SectionHeader variant="secondary" className="flex items-center justify-center gap-6">
+                            <Award className="w-20 h-20 text-teal-400" />
+                            Nima uchun KONTAINER CITY?
                         </SectionHeader>
 
-                        <div className="grid md:grid-cols-2 gap-6">
+                        <div className="grid md:grid-cols-2 gap-10">
                             {COMPANY_ADVANTAGES.map((advantage, index) => (
                                 <motion.div
                                     key={index}
-                                    className="flex items-start space-x-3 p-4 rounded-xl hover:bg-red-50/50 transition-colors"
-                                    initial={{ opacity: 0, x: -30 }}
+                                    className="flex items-start space-x-5 p-6 rounded-2xl hover:bg-slate-700/30 transition-all duration-500 border border-slate-600/20"
+                                    initial={{ opacity: 0, x: -50 }}
                                     whileInView={{ opacity: 1, x: 0 }}
-                                    transition={{ delay: index * 0.05, duration: 0.6 }}
+                                    transition={{ delay: index * 0.1, duration: 0.8 }}
                                     viewport={{ once: true }}
+                                    whileHover={{ scale: 1.02, x: 10 }}
                                 >
-                                    <CheckCircle className="w-5 h-5 text-red-500 flex-shrink-0 mt-0.5" />
-                                    <span className="text-slate-700 leading-relaxed">{advantage}</span>
-                                </motion.div>
-                            ))}
-                        </div>
-                    </InfoCard>
-                </motion.section>
-
-                {/* FAQ Section */}
-                <motion.section className="py-16">
-                    <InfoCard variant="accent">
-                        <SectionHeader gradient>SAVOL - JAVOBLAR</SectionHeader>
-                        <div className="space-y-6">
-                            {[
-                                {
-                                    q: "Nega aynan Kontainer City?",
-                                    a: "Bizdagi kontainerdan qurilgan loyihalar narx jihatidan bozordagi boshqalardan sezilarli darajada arzonroq."
-                                },
-                                {
-                                    q: "Bizdan xarid qilishingizni nima qulayliklar bor?",
-                                    a: "Boshlang'ich va o'rta bizneslar uchun qimmat ijara yoki qimmat qurilish xarajatlari muammo. Biz esa ular uchun biznesni boshlash yoki kengaytirishning arzon va qulay yechimini taklif qilamiz."
-                                },
-                                {
-                                    q: "Buyurtmani kim tayyorlaydi?",
-                                    a: "Buyurtmalarni oddiy ustalar emas, balki haqiqiy professionallar bajaradi. Biz faqat sifatli materiallardan foydalanamiz."
-                                },
-                                {
-                                    q: "Bizga nima uchun ishonishingiz kerak?",
-                                    a: "Bizning fabrikamiz O'zbekiston bo'yicha birinchi ochilgan va birinchi raqmli fabrika hisoblanadi va 8 yildan buyon faoliyatda!"
-                                }
-                            ].map((faq, index) => (
-                                <motion.div
-                                    key={index}
-                                    className="bg-white/80 backdrop-blur-sm rounded-xl p-6 shadow-md border-l-4 border-red-500"
-                                    initial={{ opacity: 0, y: 30 }}
-                                    whileInView={{ opacity: 1, y: 0 }}
-                                    transition={{ delay: index * 0.1, duration: 0.6 }}
-                                    viewport={{ once: true }}
-                                >
-                                    <h3 className="text-lg font-semibold text-slate-800 mb-3 flex items-start">
-                                        <span className="text-red-500 mr-2">❓</span>
-                                        {faq.q}
-                                    </h3>
-                                    <p className="text-slate-600 ml-7 leading-relaxed">
-                                        <span className="text-red-500 mr-2">👉</span>
-                                        {faq.a}
-                                    </p>
+                                    <div className="w-12 h-12 rounded-full bg-gradient-to-r from-teal-400 to-cyan-400 flex items-center justify-center flex-shrink-0 shadow-lg">
+                                        <CheckCircle className="w-6 h-6 text-slate-900" />
+                                    </div>
+                                    <span className="text-gray-200 leading-relaxed text-lg font-light">{advantage}</span>
                                 </motion.div>
                             ))}
                         </div>
@@ -460,35 +467,35 @@ function KonteynerCity() {
                 </motion.section>
 
                 {/* Key Features */}
-                <motion.section className="py-16">
-                    <InfoCard variant="default">
-                        <SectionHeader className="flex items-center justify-center gap-3">
-                            <TrendingUp className="w-12 h-12 text-red-500" />
-                            KONTAINER CITY <span className="text-red-600">AFZALLIKLARI</span>
+                <motion.section className="py-24">
+                    <InfoCard variant="accent">
+                        <SectionHeader variant="primary" className="flex items-center justify-center gap-6">
+                            <TrendingUp className="w-20 h-20 text-teal-300" />
+                            KONTAINER CITY ning texnologik ustunliklari
                         </SectionHeader>
 
-                        <div className="grid md:grid-cols-2 gap-8">
+                        <div className="grid md:grid-cols-2 gap-16">
                             {KEY_FEATURES.map((feature, index) => {
-                                const IconComponent = feature.icon;
+                                // const IconComponent = feature.icon;
                                 return (
                                     <motion.div
                                         key={feature.title}
-                                        initial={{ opacity: 0, scale: 0.9 }}
+                                        initial={{ opacity: 0, scale: 0.8 }}
                                         whileInView={{ opacity: 1, scale: 1 }}
-                                        transition={{ delay: index * 0.1, duration: 0.6 }}
+                                        transition={{ delay: index * 0.3, duration: 1 }}
                                         viewport={{ once: true }}
-                                        whileHover={{ y: -5 }}
+                                        whileHover={{ y: -15 }}
                                     >
-                                        <InfoCard variant="glass" className="h-full">
-                                            <div className="flex items-start space-x-4">
-                                                <div className={`p-4 rounded-2xl bg-gradient-to-r ${feature.color} shadow-lg`}>
-                                                    <IconComponent className="w-7 h-7 text-white" />
-                                                </div>
+                                        <InfoCard variant="glass" className="h-full border-2 border-teal-500/20">
+                                            <div className="flex items-start space-x-8">
+                                                {/* <div className={`p-8 hidden lg:inline-flex rounded-3xl bg-gradient-to-r ${feature.color} shadow-2xl`}>
+                                                    <IconComponent className="w-12 h-12 text-white" />
+                                                </div> */}
                                                 <div className="flex-1">
-                                                    <h4 className="text-xl font-bold text-slate-800 mb-3">
+                                                    <h4 className="text-3xl font-light text-teal-300 mb-6 tracking-wide">
                                                         {feature.title}
                                                     </h4>
-                                                    <p className="text-slate-600 leading-relaxed">
+                                                    <p className="text-gray-300 leading-relaxed text-lg font-light">
                                                         {feature.description}
                                                     </p>
                                                 </div>
@@ -501,31 +508,78 @@ function KonteynerCity() {
                     </InfoCard>
                 </motion.section>
 
+                {/* FAQ Section */}
+                <motion.section className="py-24">
+                    <InfoCard variant="gradient">
+                        <SectionHeader variant="secondary">Muhim savollar va javoblar</SectionHeader>
+                        <div className="space-y-10">
+                            {[
+                                {
+                                    q: "Kontainer City ning asosiy farqi nimada?",
+                                    a: "Biz O'zbekistonda modulli kontainer arxitekturasining kashshofi sifatida 8 yil davomida innovatsion yechimlar yaratib kelmoqdamiz."
+                                },
+                                {
+                                    q: "Bizning xizmatlarimizning asosiy afzalligi nima?",
+                                    a: "Modulli tizim orqali an'anaviy qurilishdan 5-7 marta arzon va 10 marta tezroq natijaga erishamiz."
+                                },
+                                {
+                                    q: "Loyihalarni kim amalga oshiradi?",
+                                    a: "Barcha loyihalar yuqori malakali arxitektor, muhandis va tajribali ishchi kuchi tomonidan bajariladi."
+                                },
+                                {
+                                    q: "Sifat kafolati qanday ta'minlanadi?",
+                                    a: "Evropa standartlaridagi materiallar va 25 yillik kafolat bilan har bir loyihaning sifati ta'minlanadi."
+                                }
+                            ].map((faq, index) => (
+                                <motion.div
+                                    key={index}
+                                    className="bg-slate-800/60 backdrop-blur-lg rounded-3xl p-10 shadow-2xl border border-slate-600/30"
+                                    initial={{ opacity: 0, y: 50 }}
+                                    whileInView={{ opacity: 1, y: 0 }}
+                                    transition={{ delay: index * 0.2, duration: 0.8 }}
+                                    viewport={{ once: true }}
+                                    whileHover={{ scale: 1.01 }}
+                                >
+                                    <h3 className="text-2xl font-light text-teal-300 mb-6 flex items-start tracking-wide">
+                                        {/* <span className="text-teal-400 mr-4 text-4xl font-light">S:</span> */}
+                                        {faq.q}
+                                    </h3>
+                                    <p className="text-gray-300 ml-4 leading-relaxed text-lg font-light">
+                                        {/* <span className="text-cyan-400 mr-4 text-4xl font-light">J:</span> */}
+                                        {faq.a}
+                                    </p>
+                                </motion.div>
+                            ))}
+                        </div>
+                    </InfoCard>
+                </motion.section>
+
                 {/* About Section */}
-                <motion.section className="py-16">
-                    <div className="grid lg:grid-cols-2 gap-12 items-center">
+                <motion.section className="py-24">
+                    <div className="grid lg:grid-cols-2 gap-20 items-center">
                         <motion.div
-                            initial={{ opacity: 0, x: -50 }}
+                            initial={{ opacity: 0, x: -80 }}
                             whileInView={{ opacity: 1, x: 0 }}
-                            transition={{ duration: 0.8 }}
+                            transition={{ duration: 1.2 }}
                             viewport={{ once: true }}
                         >
-                            <h2 className="text-4xl font-bold mb-8 bg-gradient-to-r from-red-600 to-slate-700 bg-clip-text text-transparent text-center lg:text-left">
+                            <h2 className="text-6xl font-light mb-16 bg-gradient-to-r from-teal-400 via-cyan-400 to-emerald-400 bg-clip-text text-transparent tracking-wider">
                                 KONTAINER CITY HAQIDA
                             </h2>
 
-                            <div className="space-y-6 text-slate-600 leading-relaxed">
+                            <div className="space-y-10 text-gray-300 leading-relaxed text-lg">
                                 {[
-                                    "Metal konstruksiyadan qurilgan do'konlar bugungi kunda eng samarali va zamonaviy yechim hisoblanadi. Bunday inshootlar nafaqat mustahkam va ishonchli, balki iqtisodiy jihatdan ham foydali.",
-                                    "Tez quriladi – qisqa muddat ichida do'koningizni ishga tushirishingiz mumkin. Arzonroq – an'anaviy g'isht yoki beton qurilishidan ancha tejamkor. Ko'chma imkoniyat – kerak bo'lsa, konstruksiyani boshqa joyga ko'chirib o'rnatish mumkin.",
-                                    "Moslashuvchan dizayn – savdo do'konlari, ombor yoki xizmat ko'rsatish shoxobchalari uchun qulay. Uzoq muddatli xizmat – sifatli metall materiallar zangga qarshi maxsus himoya bilan qoplanadi."
+                                    "Modulli kontainer arxitekturasi - bu kelajakning qurilish texnologiyasi. Bizning innovatsion yondashuvimiz orqali eng murakkab loyihalarni ham oddiy va samarali tarzda amalga oshirish mumkin.",
+                                    "Har bir kontainer maxsus loyihalashtiriladi va professional jihoz bilan jihozlanadi. Energiya samaradorligi, ekologik toza materiallar va zamonaviy dizayn tamoyillarini birlashtirgan holda loyihalar yaratamiz.",
+                                    "Bizning modulli tizimimiz orqali istagan vaqtda binolarni kengaytirish, qayta konfiguratsiya qilish yoki hatto boshqa joyga ko'chirish mumkin. Bu sizning investitsiyangizning uzoq muddatli qiymatini ta'minlaydi."
                                 ].map((text, index) => (
                                     <motion.p
                                         key={index}
-                                        initial={{ opacity: 0, y: 20 }}
+                                        initial={{ opacity: 0, y: 40 }}
                                         whileInView={{ opacity: 1, y: 0 }}
-                                        transition={{ delay: index * 0.2, duration: 0.6 }}
+                                        transition={{ delay: index * 0.4, duration: 1 }}
                                         viewport={{ once: true }}
+                                        className="p-8 bg-slate-800/40 rounded-2xl border-l-4 border-teal-400 shadow-lg font-light"
                                     >
                                         {text}
                                     </motion.p>
@@ -534,28 +588,30 @@ function KonteynerCity() {
                         </motion.div>
 
                         <motion.div
-                            initial={{ opacity: 0, x: 50 }}
+                            initial={{ opacity: 0, x: 80 }}
                             whileInView={{ opacity: 1, x: 0 }}
-                            transition={{ duration: 0.8 }}
+                            transition={{ duration: 1.2 }}
                             viewport={{ once: true }}
                         >
-                            <InfoCard variant="gradient">
-                                <h3 className="text-2xl font-bold text-slate-800 mb-6 text-center">
-                                    Kontainer City <span className='text-3xl italic text-red-600'>Xizmatlarimiz</span>
+                            <InfoCard variant="dark">
+                                <h3 className="text-4xl font-light text-white mb-12 text-center tracking-wide">
+                                    Kontainer City <span className='text-5xl italic text-teal-300 font-light'>Professional Xizmatlar</span>
                                 </h3>
 
-                                <div className="space-y-4">
+                                <div className="space-y-8">
                                     {SERVICES.map((service, index) => (
                                         <motion.div
                                             key={index}
-                                            className="flex items-start space-x-3 p-3 rounded-lg hover:bg-white/50 transition-colors"
-                                            initial={{ opacity: 0, x: -20 }}
+                                            className="flex items-start space-x-5 p-5 rounded-2xl hover:bg-slate-700/30 transition-all duration-500"
+                                            initial={{ opacity: 0, x: -40 }}
                                             whileInView={{ opacity: 1, x: 0 }}
-                                            transition={{ delay: index * 0.1, duration: 0.6 }}
+                                            transition={{ delay: index * 0.15, duration: 0.8 }}
                                             viewport={{ once: true }}
                                         >
-                                            <CheckCircle className="w-5 h-5 text-red-500 flex-shrink-0 mt-0.5" />
-                                            <span className="text-slate-700">{service}</span>
+                                            <div className="w-10 h-10 rounded-full bg-gradient-to-r from-teal-300 to-cyan-300 flex items-center justify-center flex-shrink-0 shadow-lg">
+                                                <CheckCircle className="w-5 h-5 text-slate-900" />
+                                            </div>
+                                            <span className="text-gray-200 text-lg leading-relaxed font-light">{service}</span>
                                         </motion.div>
                                     ))}
                                 </div>
@@ -565,111 +621,117 @@ function KonteynerCity() {
                 </motion.section>
 
                 {/* Statistics */}
-                <motion.section className="py-16">
-                    <InfoCard variant="default">
-                        <SectionHeader>
-                            "QO'SHIMCHA" <span className="text-red-600">MA'LUMOTLAR</span>
+                <motion.section className="py-24">
+                    <InfoCard variant="gradient">
+                        <SectionHeader variant="secondary">
+                            Bizning <span className="text-teal-400">Professional Natijalr</span>
                         </SectionHeader>
 
-                        <div className="grid md:grid-cols-3 gap-6 mb-8">
+                        <div className="grid md:grid-cols-3 gap-12 mb-20">
                             {[
-                                { icon: TrendingUp, label: "Yillik o'sish", value: "15-20%" },
-                                { icon: Award, label: "2025-yilgi reja", value: "800-1000" },
-                                { icon: Users2, label: "Viloyatlar bo'yicha mutaxasislarimiz", value: "100+" }
+                                { icon: TrendingUp, label: "Yillik o'sish", value: "35%+", color: "from-teal-400 to-cyan-400" },
+                                { icon: Award, label: "2025 loyihalar", value: "1500+", color: "from-slate-500 to-gray-500" },
+                                { icon: Users2, label: "Mutaxassis jamoa", value: "150+", color: "from-emerald-400 to-teal-400" }
                             ].map((stat, index) => {
                                 const IconComponent = stat.icon;
                                 return (
                                     <motion.div
                                         key={stat.label}
-                                        className="text-center p-6 bg-gradient-to-br from-white/80 to-red-50/50 rounded-2xl shadow-lg"
-                                        initial={{ opacity: 0, scale: 0.8 }}
+                                        className="text-center p-12 bg-slate-800/60 backdrop-blur-sm rounded-3xl shadow-2xl border border-slate-600/30"
+                                        initial={{ opacity: 0, scale: 0.6 }}
                                         whileInView={{ opacity: 1, scale: 1 }}
-                                        transition={{ delay: index * 0.1, duration: 0.6 }}
+                                        transition={{ delay: index * 0.3, duration: 1 }}
                                         viewport={{ once: true }}
-                                        whileHover={{ scale: 1.05 }}
+                                        whileHover={{ scale: 1.05, y: -10 }}
                                     >
-                                        <IconComponent className="w-10 h-10 text-red-500 mx-auto mb-4" />
-                                        <div className="text-3xl font-bold text-slate-800 mb-2">{stat.value}</div>
-                                        <div className="text-sm text-slate-600 font-medium">{stat.label}</div>
+                                        <div className={`w-24 h-24 mx-auto mb-8 rounded-3xl bg-gradient-to-r ${stat.color} flex items-center justify-center shadow-2xl`}>
+                                            <IconComponent className="w-12 h-12 text-white" />
+                                        </div>
+                                        <div className="text-6xl font-light text-white mb-6">{stat.value}</div>
+                                        <div className="text-teal-300 font-light text-xl tracking-wide">{stat.label}</div>
                                     </motion.div>
                                 );
                             })}
                         </div>
 
                         <motion.div
-                            className="space-y-6 text-slate-600 leading-relaxed"
+                            className="space-y-10 text-gray-300 leading-relaxed text-lg"
                             initial={{ opacity: 0 }}
                             whileInView={{ opacity: 1 }}
-                            transition={{ duration: 0.8 }}
+                            transition={{ duration: 1.2 }}
                             viewport={{ once: true }}
                         >
                             {[
-                                "Bizning ishlab chiqarish quvvatimiz har kuni 20 kv, oyiga 610 kv va yiliga 7300 kv tashkil etadi.",
-                                "Viloyatlar miqyosida 100 dan ko'proq mutaxasislarimiz faoliyat yuritadi.",
-                                "Ishlab chiqarish quvvatimiz kuniga ikkita do'konni tayyor holga keltirishga imkon beradi.",
-                                "Bizning fabrikamiz O‘zbekiston bo‘yicha birinchi ochilgan va birinchi raqamli fabrika hisoblanadi. Eng asosiysi 8 yildan beri faoliyatda!"
+                                "Bizning ishlab chiqarish quvvatimiz kuniga 35 kv.m, oyiga 1050 kv.m va yiliga 12,600+ kv.m tashkil etadi.",
+                                "O'zbekistonning barcha hududlarida 150 dan ortiq yuqori malakali arxitektor va muhandislarimiz faoliyat ko'rsatadi.",
+                                "Zamonaviy texnologiyalar yordamida kuniga 5 tagacha to'liq tayyor kontainer modulini ishlab chiqaramiz.",
+                                "O'zbekiston kontainer sanoatining asoschilaridan biri sifatida 8 yil davomida sohani rivojlantirishga ulkan hissa qo'shganmiz."
                             ].map((text, index) => (
-                                <motion.p
+                                <motion.div
                                     key={index}
-                                    initial={{ opacity: 0, y: 20 }}
+                                    initial={{ opacity: 0, y: 40 }}
                                     whileInView={{ opacity: 1, y: 0 }}
-                                    transition={{ delay: index * 0.1, duration: 0.6 }}
+                                    transition={{ delay: index * 0.2, duration: 1 }}
                                     viewport={{ once: true }}
-                                    className="p-4 bg-white/50 rounded-lg border-l-4 border-red-200"
+                                    className="p-10 bg-slate-800/50 rounded-3xl shadow-2xl border-l-8 border-teal-400 hover:shadow-teal-500/10 transition-all duration-500"
                                 >
-                                    {text}
-                                </motion.p>
+                                    <div className="flex items-start space-x-8">
+                                        <div className="w-12 h-12 rounded-full bg-gradient-to-r from-teal-400 to-cyan-400 flex items-center justify-center flex-shrink-0 mt-2 shadow-lg">
+                                            <span className="text-slate-900 font-light text-xl">{index + 1}</span>
+                                        </div>
+                                        <p className="text-gray-300 font-light">{text}</p>
+                                    </div>
+                                </motion.div>
                             ))}
                         </motion.div>
                     </InfoCard>
                 </motion.section>
 
                 {/* Contact Section */}
-                <motion.section className="py-16">
-                    <InfoCard variant="gradient">
-                        <SectionHeader gradient className="flex items-center justify-center gap-4">
-                            <Phone className="w-10 h-10 text-red-500" />
-                            BIZ BILAN ALOQA
+                <motion.section className="py-24">
+                    <InfoCard variant="default">
+                        <SectionHeader variant="primary" className="flex items-center justify-center gap-6">
+                            <Phone className="w-10 h-10 text-teal-400" />
+                            Professional aloqa
                         </SectionHeader>
 
-                        <div className="max-w-4xl mx-auto">
+                        <div className="max-w-6xl mx-auto">
                             <motion.p
-                                className="text-slate-700 text-lg leading-relaxed text-center mb-12"
+                                className="text-gray-300 text-2xl leading-relaxed text-center mb-20 font-light tracking-wide"
                                 initial={{ opacity: 0 }}
                                 whileInView={{ opacity: 1 }}
-                                transition={{ duration: 0.6 }}
+                                transition={{ duration: 1 }}
                                 viewport={{ once: true }}
                             >
-                                Biznes — birinchi qadamdan boshlanadi. Bizning metal konstruksiyadan qurilgan
-                                ko'chma do'konlarimiz bilan sizning birinchi qadamingiz mustahkam, ishonchli va
-                                hamyonbop bo'lishini ta'minlaymiz.
+                                Innovatsion kontainer arxitekturasi orqali sizning g'oyalaringizni haqiqatga aylantirish vaqti keldi.
+                                Professional jamoa va ilg'or texnologiyalar bilan eng murakkab loyihalarni ham amalga oshiramiz.
                             </motion.p>
 
-                            <div className="grid md:grid-cols-2 gap-8">
+                            <div className="grid lg:grid-cols-2 gap-16">
                                 <motion.div
-                                    initial={{ opacity: 0, x: -30 }}
+                                    initial={{ opacity: 0, x: -60 }}
                                     whileInView={{ opacity: 1, x: 0 }}
-                                    transition={{ duration: 0.6 }}
+                                    transition={{ duration: 1 }}
                                     viewport={{ once: true }}
                                 >
-                                    <InfoCard variant="glass" className="h-full">
-                                        <h3 className="text-2xl font-bold text-slate-800 mb-6 text-center">
-                                            Murojat uchun
+                                    <InfoCard variant="accent" className="h-full">
+                                        <h3 className="text-4xl font-light text-teal-300 mb-12 text-center tracking-wide">
+                                            Aloqa ma'lumotlari
                                         </h3>
 
-                                        <div className="space-y-4">
+                                        <div className="space-y-8">
                                             <motion.a
                                                 href="tel:+998787777557"
-                                                className="flex items-center gap-4 p-4 bg-white/70 rounded-xl hover:bg-white/90 transition-all duration-300 group"
-                                                whileHover={{ scale: 1.02 }}
+                                                className="flex items-center gap-8 p-5 bg-slate-700/50 rounded-3xl hover:bg-slate-600/50 transition-all duration-500 group shadow-2xl border border-teal-500/20"
+                                                whileHover={{ scale: 1.02, x: 15 }}
                                                 whileTap={{ scale: 0.98 }}
                                             >
-                                                <div className="p-3 bg-gradient-to-r from-red-500 to-red-600 rounded-lg">
-                                                    <Phone className="w-5 h-5 text-white" />
+                                                <div className="hidden lg:inline-flex p-5 bg-gradient-to-r from-teal-400 to-cyan-400 rounded-3xl shadow-2xl">
+                                                    <Phone className="w-10 h-10 text-slate-900" />
                                                 </div>
                                                 <div>
-                                                    <p className="font-semibold text-slate-800">Telefon raqami</p>
-                                                    <p className="text-red-600 font-medium">+998 78 777 75 57</p>
+                                                    <p className="font-light text-teal-300 text-2xl mb-2">Telefon aloqasi</p>
+                                                    <p className="text-white font-light text-2xl">+998 78 777 75 57</p>
                                                 </div>
                                             </motion.a>
                                         </div>
@@ -677,27 +739,28 @@ function KonteynerCity() {
                                 </motion.div>
 
                                 <motion.div
-                                    initial={{ opacity: 0, x: 30 }}
+                                    initial={{ opacity: 0, x: 60 }}
                                     whileInView={{ opacity: 1, x: 0 }}
-                                    transition={{ duration: 0.6 }}
+                                    transition={{ duration: 1 }}
                                     viewport={{ once: true }}
                                 >
-                                    <InfoCard variant="glass" className="h-full">
-                                        <h3 className="text-2xl font-bold text-slate-800 mb-6 text-center">
-                                            Bizning manzil
+                                    <InfoCard variant="accent" className="h-full">
+                                        <h3 className="text-4xl font-light text-teal-300 mb-12 text-center tracking-wide">
+                                            Bizning manzilimiz
                                         </h3>
 
-                                        <div className="flex items-start gap-4 p-4 bg-white/70 rounded-xl">
-                                            <div className="p-3 bg-gradient-to-r from-slate-600 to-slate-700 rounded-lg flex-shrink-0">
-                                                <MapPin className="w-5 h-5 text-white" />
+                                        <div className="flex items-start gap-8 p-5 bg-slate-700/50 rounded-3xl shadow-2xl border border-teal-500/20">
+                                            <div className="hidden lg:inline-flex p-5 bg-gradient-to-r from-slate-500 to-gray-500 rounded-3xl flex-shrink-0 shadow-2xl">
+                                                <MapPin className="w-10 h-10 text-white" />
                                             </div>
                                             <div>
-                                                <p className="font-semibold text-slate-800 mb-2">Fabrika manzili</p>
-                                                <p className="text-slate-600 leading-relaxed">
-                                                    Toshkent shahar, Yangihayot tumani<br />
-                                                    Metro: Turon bekat<br />
-                                                    Index bozor chorraxasi
-                                                </p>
+                                                <p className="font-light text-teal-300 mb-6 text-2xl">Ishlab chiqarish markazi</p>
+                                                <div className="text-gray-300 leading-relaxed space-y-1 font-light text-lg">
+                                                    <p className="font-medium text-xl">Toshkent shahar, Yangihayot tumani</p>
+                                                    <p>Metro: Turon bekat</p>
+                                                    <p>Index bozor chorraxasi</p>
+                                                    <p>Sofdil ko'chasi</p>
+                                                </div>
                                             </div>
                                         </div>
                                     </InfoCard>
@@ -706,24 +769,25 @@ function KonteynerCity() {
 
                             {/* Final CTA */}
                             <motion.div
-                                className="text-center mt-12"
-                                initial={{ opacity: 0, y: 30 }}
+                                className="text-center mt-24"
+                                initial={{ opacity: 0, y: 50 }}
                                 whileInView={{ opacity: 1, y: 0 }}
-                                transition={{ duration: 0.6 }}
+                                transition={{ duration: 1 }}
                                 viewport={{ once: true }}
                             >
-                                <h3 className="text-xl font-semibold text-slate-800 mb-6">
-                                    Biznesingizni boshlash uchun tayyor bo'lsangiz?
+                                <h3 className="text-4xl font-light text-teal-300 mb-12 tracking-wide">
+                                    Kontainer loyihangizni bugunoq boshlang
                                 </h3>
-                                <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                                <div className="flex flex-col sm:flex-row gap-10 justify-center">
                                     <CTAButton href="tel:+998787777557" variant="primary">
-                                        <div className='flex gap-1 items-center'>
-                                        <Phone className="w-5 h-5" />
-                                        <span className='text-white'>Hozir Buyurtma Bering</span>
+                                        <div className='flex items-center gap-1'>
+                                            <Phone className="w-6 h-6" />
+                                            Loyiha boshlash
                                         </div>
+
                                     </CTAButton>
-                                    <CTAButton href="https://t.me/kontainer_city" variant="secondary">
-                                        <span className='text-white'>Bepul Maslahat Oling</span>
+                                    <CTAButton href="https://t.me/kontainer_city" variant="outline">
+                                        Bepul maslahat
                                     </CTAButton>
                                 </div>
                             </motion.div>
@@ -733,20 +797,28 @@ function KonteynerCity() {
 
                 {/* Footer */}
                 <motion.footer
-                    className="py-12 text-center"
+                    className="py-24 text-center"
                     initial={{ opacity: 0 }}
                     whileInView={{ opacity: 1 }}
-                    transition={{ duration: 0.6 }}
+                    transition={{ duration: 1 }}
                     viewport={{ once: true }}
                 >
-                    <div className="space-y-4">
-                        <h3 className="text-2xl font-bold bg-gradient-to-r from-red-600 to-slate-700 bg-clip-text text-transparent">
+                    <div className="space-y-10">
+                        <motion.h3
+                            className="text-6xl font-light bg-gradient-to-r from-teal-400 via-cyan-400 to-emerald-400 bg-clip-text text-transparent tracking-wider"
+                            whileHover={{ scale: 1.05 }}
+                        >
                             KONTAINER CITY
-                        </h3>
-                        <p className="text-slate-600">
-                            O'zbekistondagi eng ishonchli kontainer fabrikasi
+                        </motion.h3>
+                        <div className="flex justify-center items-center space-x-6">
+                            <div className="w-32 h-0.5 bg-gradient-to-r from-transparent to-teal-400"></div>
+                            <Container className="w-16 h-16 text-teal-400" />
+                            <div className="w-32 h-0.5 bg-gradient-to-l from-transparent to-teal-400"></div>
+                        </div>
+                        <p className="text-gray-500 text-xl font-light tracking-wide">
+                            O'zbekistonning innovatsion kontainer arxitektura kompaniyasi
                         </p>
-                        <p className="text-sm text-slate-500">
+                        <p className="text-sm text-gray-500 font-light">
                             © 2025 Kontainer City. Barcha huquqlar himoyalangan.
                         </p>
                     </div>
