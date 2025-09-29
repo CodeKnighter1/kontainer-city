@@ -448,11 +448,11 @@ function KonteynerCity() {
                             Nima uchun KONTAINER CITY?
                         </SectionHeader>
 
-                        <div className="grid md:grid-cols-2 gap-10">
+                        <div className="grid md:grid-cols-2 gap-5">
                             {COMPANY_ADVANTAGES.map((advantage, index) => (
                                 <motion.div
                                     key={index}
-                                    className="flex items-start space-x-5 p-6 rounded-2xl hover:bg-slate-700/30 transition-all duration-500 border border-slate-600/20"
+                                    className="flex items-start space-x-5 py-4 rounded-2xl hover:bg-slate-700/30 transition-all duration-500 border border-slate-600/20"
                                     initial={{ opacity: 0, x: -50 }}
                                     whileInView={{ opacity: 1, x: 0 }}
                                     transition={{ delay: index * 0.1, duration: 0.8 }}
@@ -477,7 +477,7 @@ function KonteynerCity() {
                             KONTAINER CITY ning texnologik ustunliklari
                         </SectionHeader>
 
-                        <div className="grid md:grid-cols-2 gap-16">
+                        <div className="grid md:grid-cols-2 gap-10">
                             {KEY_FEATURES.map((feature, index) => {
                                 // const IconComponent = feature.icon;
                                 return (
@@ -602,7 +602,7 @@ function KonteynerCity() {
                                     {SERVICES.map((service, index) => (
                                         <motion.div
                                             key={index}
-                                            className="flex items-start space-x-5 p-5 rounded-2xl hover:bg-slate-700/30 transition-all duration-500"
+                                            className="flex items-start space-x-5 py-5 rounded-2xl hover:bg-slate-700/30 transition-all duration-500"
                                             initial={{ opacity: 0, x: -40 }}
                                             whileInView={{ opacity: 1, x: 0 }}
                                             transition={{ delay: index * 0.15, duration: 0.8 }}
@@ -697,7 +697,7 @@ function KonteynerCity() {
 
                         <div className="max-w-6xl mx-auto">
                             <motion.p
-                                className="text-gray-300 text-2xl leading-relaxed text-center mb-20 font-light tracking-wide"
+                                className="text-gray-300 text-2xl leading-relaxed text-center mb-16 font-light tracking-wide"
                                 initial={{ opacity: 0 }}
                                 whileInView={{ opacity: 1 }}
                                 transition={{ duration: 1 }}
