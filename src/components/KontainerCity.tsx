@@ -135,9 +135,9 @@ const InfoCard: React.FC<InfoCardProps> = ({
 
     const variantClasses = {
         default: "bg-slate-800/90 backdrop-blur-sm shadow-2xl hover:shadow-teal-500/10 border border-slate-700/50 p-8",
-        gradient: "bg-gradient-to-br from-slate-800/95 via-gray-800/90 to-slate-900/95 backdrop-blur-md shadow-2xl hover:shadow-cyan-500/15 border border-slate-600/30 p-10",
-        accent: "bg-gradient-to-br from-teal-900/80 to-slate-800/90 backdrop-blur-sm shadow-2xl hover:shadow-teal-400/20 border border-teal-700/30 p-8",
-        glass: "bg-slate-800/30 backdrop-blur-xl shadow-2xl border border-slate-600/20 hover:bg-slate-800/40 p-8",
+        gradient: "bg-gradient-to-br from-slate-800/95 via-gray-800/90 to-slate-900/95 backdrop-blur-md shadow-2xl hover:shadow-cyan-500/15 border border-slate-600/30 p-4 lg:p-8",
+        accent: "bg-gradient-to-br from-teal-900/80 to-slate-800/90 backdrop-blur-sm shadow-2xl hover:shadow-teal-400/20 border border-teal-700/30 p-4",
+        glass: "bg-slate-800/30 backdrop-blur-xl shadow-2xl border border-slate-600/20 hover:bg-slate-800/40 p-4",
         dark: "bg-gradient-to-br from-gray-900 to-slate-900 text-white shadow-2xl hover:shadow-emerald-900/20 p-10 border border-gray-700/50"
     };
 
@@ -408,7 +408,7 @@ function KonteynerCity() {
                 </motion.section>
 
                 {/* Social Media Section */}
-                <motion.section className="py-24">
+                <motion.section className="py-10">
                     <InfoCard variant="dark">
                         <SectionHeader className="text-white mb-12">
                             Bizning ijtimoiy sahifalatimiz
@@ -420,25 +420,28 @@ function KonteynerCity() {
                                     YouTube
                                 </div>
                             </CTAButton>
-                            <CTAButton href="https://www.instagram.com/kontainer_city.uz?igsh=eTN2amw1cDM1MGNv&utm_source=qr" variant="pick">
-                                <div className='flex items-center gap-1 text-white'>
-                                    <Instagram className="w-6 h-6" />
-                                    Instagram
-                                </div>
 
-                            </CTAButton>
-                            <CTAButton href="https://t.me/kontainer_city" variant="telegram">
-                                <div className='flex items-center gap-1 text-white'>
-                                    <img src={telegram_l} alt="telegram logo" className='w-7 h-7' />
-                                    Telegram
-                                </div>
-                            </CTAButton>
+                            <div className='flex gap-7'>
+                                <CTAButton href="https://www.instagram.com/kontainer_city.uz?igsh=eTN2amw1cDM1MGNv&utm_source=qr" variant="pick">
+                                    <div className='flex items-center gap-1 text-white'>
+                                        <Instagram className="w-6 h-6" />
+                                        Instagram
+                                    </div>
+
+                                </CTAButton>
+                                <CTAButton href="https://t.me/kontainer_city" variant="telegram">
+                                    <div className='flex items-center gap-1 text-white'>
+                                        <img src={telegram_l} alt="telegram logo" className='w-7 h-7' />
+                                        Telegram
+                                    </div>
+                                </CTAButton>
+                            </div>
                         </div>
                     </InfoCard>
                 </motion.section>
 
                 {/* Company Advantages */}
-                <motion.section className="py-24">
+                <motion.section className="py-10">
                     <InfoCard variant="default">
                         <SectionHeader variant="secondary" className="flex items-center justify-center gap-6">
                             <Award className="w-20 h-20 text-teal-400" />
@@ -467,7 +470,7 @@ function KonteynerCity() {
                 </motion.section>
 
                 {/* Key Features */}
-                <motion.section className="py-24">
+                <motion.section className="py-10">
                     <InfoCard variant="accent">
                         <SectionHeader variant="primary" className="flex items-center justify-center gap-6">
                             <TrendingUp className="w-20 h-20 text-teal-300" />
@@ -488,11 +491,8 @@ function KonteynerCity() {
                                     >
                                         <InfoCard variant="glass" className="h-full border-2 border-teal-500/20">
                                             <div className="flex items-start space-x-8">
-                                                {/* <div className={`p-8 hidden lg:inline-flex rounded-3xl bg-gradient-to-r ${feature.color} shadow-2xl`}>
-                                                    <IconComponent className="w-12 h-12 text-white" />
-                                                </div> */}
                                                 <div className="flex-1">
-                                                    <h4 className="text-3xl font-light text-teal-300 mb-6 tracking-wide">
+                                                    <h4 className="text-3xl font-light text-teal-300 mb-3 tracking-wide">
                                                         {feature.title}
                                                     </h4>
                                                     <p className="text-gray-300 leading-relaxed text-lg font-light">
@@ -509,7 +509,7 @@ function KonteynerCity() {
                 </motion.section>
 
                 {/* FAQ Section */}
-                <motion.section className="py-24">
+                <motion.section className="py-10">
                     <InfoCard variant="gradient">
                         <SectionHeader variant="secondary">Muhim savollar va javoblar</SectionHeader>
                         <div className="space-y-10">
@@ -555,7 +555,7 @@ function KonteynerCity() {
                 </motion.section>
 
                 {/* About Section */}
-                <motion.section className="py-24">
+                <motion.section className="py-10">
                     <div className="grid lg:grid-cols-2 gap-20 items-center">
                         <motion.div
                             initial={{ opacity: 0, x: -80 }}
@@ -621,38 +621,38 @@ function KonteynerCity() {
                 </motion.section>
 
                 {/* Statistics */}
-                <motion.section className="py-24">
+                <motion.section className="py-10">
                     <InfoCard variant="gradient">
                         <SectionHeader variant="secondary">
-                            Bizning <span className="text-teal-400">Professional Natijalr</span>
+                            Bizning <span className="text-teal-400">Professional Natijalar</span>
                         </SectionHeader>
 
-                        <div className="grid md:grid-cols-3 gap-12 mb-20">
-                            {[
-                                { icon: TrendingUp, label: "Yillik o'sish", value: "35%+", color: "from-teal-400 to-cyan-400" },
-                                { icon: Award, label: "2025 loyihalar", value: "1500+", color: "from-slate-500 to-gray-500" },
-                                { icon: Users2, label: "Mutaxassis jamoa", value: "150+", color: "from-emerald-400 to-teal-400" }
-                            ].map((stat, index) => {
-                                const IconComponent = stat.icon;
-                                return (
-                                    <motion.div
-                                        key={stat.label}
-                                        className="text-center p-12 bg-slate-800/60 backdrop-blur-sm rounded-3xl shadow-2xl border border-slate-600/30"
-                                        initial={{ opacity: 0, scale: 0.6 }}
-                                        whileInView={{ opacity: 1, scale: 1 }}
-                                        transition={{ delay: index * 0.3, duration: 1 }}
-                                        viewport={{ once: true }}
-                                        whileHover={{ scale: 1.05, y: -10 }}
-                                    >
-                                        <div className={`w-24 h-24 mx-auto mb-8 rounded-3xl bg-gradient-to-r ${stat.color} flex items-center justify-center shadow-2xl`}>
-                                            <IconComponent className="w-12 h-12 text-white" />
-                                        </div>
-                                        <div className="text-6xl font-light text-white mb-6">{stat.value}</div>
-                                        <div className="text-teal-300 font-light text-xl tracking-wide">{stat.label}</div>
-                                    </motion.div>
-                                );
-                            })}
-                        </div>
+                            {/* <div className="grid md:grid-cols-3 gap-12 mb-20">
+                                {[
+                                    { icon: TrendingUp, label: "Yillik o'sish", value: "35%+", color: "from-teal-400 to-cyan-400" },
+                                    { icon: Award, label: "2025 loyihalar", value: "1500+", color: "from-slate-500 to-gray-500" },
+                                    { icon: Users2, label: "Mutaxassis jamoa", value: "150+", color: "from-emerald-400 to-teal-400" }
+                                ].map((stat, index) => {
+                                    const IconComponent = stat.icon;
+                                    return (
+                                        <motion.div
+                                            key={stat.label}
+                                            className="text-center p-12 bg-slate-800/60 backdrop-blur-sm rounded-3xl shadow-2xl border border-slate-600/30"
+                                            initial={{ opacity: 0, scale: 0.6 }}
+                                            whileInView={{ opacity: 1, scale: 1 }}
+                                            transition={{ delay: index * 0.3, duration: 1 }}
+                                            viewport={{ once: true }}
+                                            whileHover={{ scale: 1.05, y: -10 }}
+                                        >
+                                            <div className={`w-24 h-24 mx-auto mb-8 rounded-3xl bg-gradient-to-r ${stat.color} flex items-center justify-center shadow-2xl`}>
+                                                <IconComponent className="w-12 h-12 text-white" />
+                                            </div>
+                                            <div className="text-6xl font-light text-white mb-6">{stat.value}</div>
+                                            <div className="text-teal-300 font-light text-xl tracking-wide">{stat.label}</div>
+                                        </motion.div>
+                                    );
+                                })}
+                            </div> */}
 
                         <motion.div
                             className="space-y-10 text-gray-300 leading-relaxed text-lg"
@@ -675,8 +675,8 @@ function KonteynerCity() {
                                     viewport={{ once: true }}
                                     className="p-10 bg-slate-800/50 rounded-3xl shadow-2xl border-l-8 border-teal-400 hover:shadow-teal-500/10 transition-all duration-500"
                                 >
-                                    <div className="flex items-start space-x-8">
-                                        <div className="w-12 h-12 rounded-full bg-gradient-to-r from-teal-400 to-cyan-400 flex items-center justify-center flex-shrink-0 mt-2 shadow-lg">
+                                    <div className="flex items-start space-x-6">
+                                        <div className="w-12 h-12 hidden lg:flex rounded-full bg-gradient-to-r from-teal-400 to-cyan-400 items-center justify-center flex-shrink-0 mt-2 shadow-lg">
                                             <span className="text-slate-900 font-light text-xl">{index + 1}</span>
                                         </div>
                                         <p className="text-gray-300 font-light">{text}</p>
@@ -707,7 +707,7 @@ function KonteynerCity() {
                                 Professional jamoa va ilg'or texnologiyalar bilan eng murakkab loyihalarni ham amalga oshiramiz.
                             </motion.p>
 
-                            <div className="grid lg:grid-cols-2 gap-16">
+                            <div className="grid lg:grid-cols-2 gap-14">
                                 <motion.div
                                     initial={{ opacity: 0, x: -60 }}
                                     whileInView={{ opacity: 1, x: 0 }}
@@ -715,14 +715,14 @@ function KonteynerCity() {
                                     viewport={{ once: true }}
                                 >
                                     <InfoCard variant="accent" className="h-full">
-                                        <h3 className="text-4xl font-light text-teal-300 mb-12 text-center tracking-wide">
+                                        <h3 className="text-4xl font-light text-teal-300 mb-7 text-center tracking-wide">
                                             Aloqa ma'lumotlari
                                         </h3>
 
                                         <div className="space-y-8">
                                             <motion.a
                                                 href="tel:+998787777557"
-                                                className="flex items-center gap-8 p-5 bg-slate-700/50 rounded-3xl hover:bg-slate-600/50 transition-all duration-500 group shadow-2xl border border-teal-500/20"
+                                                className="flex items-center gap-6 p-5 bg-slate-700/50 rounded-3xl hover:bg-slate-600/50 transition-all duration-500 group shadow-2xl border border-teal-500/20"
                                                 whileHover={{ scale: 1.02, x: 15 }}
                                                 whileTap={{ scale: 0.98 }}
                                             >
@@ -745,11 +745,11 @@ function KonteynerCity() {
                                     viewport={{ once: true }}
                                 >
                                     <InfoCard variant="accent" className="h-full">
-                                        <h3 className="text-4xl font-light text-teal-300 mb-12 text-center tracking-wide">
+                                        <h3 className="text-4xl font-light text-teal-300 mb-7 text-center tracking-wide">
                                             Bizning manzilimiz
                                         </h3>
 
-                                        <div className="flex items-start gap-8 p-5 bg-slate-700/50 rounded-3xl shadow-2xl border border-teal-500/20">
+                                        <div className="flex items-start gap-6 p-5 bg-slate-700/50 rounded-3xl shadow-2xl border border-teal-500/20">
                                             <div className="hidden lg:inline-flex p-5 bg-gradient-to-r from-slate-500 to-gray-500 rounded-3xl flex-shrink-0 shadow-2xl">
                                                 <MapPin className="w-10 h-10 text-white" />
                                             </div>
@@ -797,13 +797,13 @@ function KonteynerCity() {
 
                 {/* Footer */}
                 <motion.footer
-                    className="py-24 text-center"
+                    className="py-8 text-center"
                     initial={{ opacity: 0 }}
                     whileInView={{ opacity: 1 }}
                     transition={{ duration: 1 }}
                     viewport={{ once: true }}
                 >
-                    <div className="space-y-10">
+                    <div className="space-y-5">
                         <motion.h3
                             className="text-6xl font-light bg-gradient-to-r from-teal-400 via-cyan-400 to-emerald-400 bg-clip-text text-transparent tracking-wider"
                             whileHover={{ scale: 1.05 }}
